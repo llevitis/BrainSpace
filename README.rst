@@ -2,8 +2,6 @@
 BrainSpace
 ====================
 
-This is the BrainSpace repo for the BrainWeb BrainHack. Our goal for this BrainHack is to improve BrainSpace's handling and visualization of volumetric data. BrainSpace is implemented in both MATLAB and Python, so we hope users of both languages will join us! Don't have a lot of experience with those? Help us make our toolbox easy to use for non-programmers!  Join us on <a href="https://mattermost.brainhack.org/brainhack/channels/brainspace"><img src="http://www.mattermost.org/wp-content/uploads/2016/03/logoHorizontal.png" width=100px /></a>! 
-
 .. image:: https://img.shields.io/travis/MICA-MNI/BrainSpace/master?style=flat&logo=travis
    :target: https://travis-ci.org/MICA-MNI/BrainSpace
 
@@ -19,6 +17,14 @@ This is the BrainSpace repo for the BrainWeb BrainHack. Our goal for this BrainH
 .. image:: https://img.shields.io/pypi/pyversions/brainspace
    :alt: PyPI - Python Version
 
+This is the BrainSpace repo for the BrainWeb BrainHack. Our goal for this
+BrainHack is to improve BrainSpace's handling and visualization of volumetric
+data. BrainSpace is implemented in both MATLAB and Python, so we hope users of
+both languages will join us! Don't have a lot of experience with those? Help us
+make our toolbox easy to use for non-programmers!  Join us on |mattermost|_
+
+.. |mattermost| image:: http://www.mattermost.org/wp-content/uploads/2016/03/logoHorizontal.png
+.. _mattermost: https://mattermost.brainhack.org/brainhack/channels/brainspace
 
 BrainSpace is a lightweight cross-platform toolbox primarily intended 
 for macroscale gradient mapping and analysis of 
