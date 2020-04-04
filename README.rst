@@ -22,7 +22,7 @@ BrainHack is to improve BrainSpace's handling and visualization of volumetric
 data. BrainSpace is implemented in both MATLAB and Python, so we hope users of
 both languages will join us! Don't have a lot of experience with those? Help us
 make our toolbox easy to use for non-programmers!  Join us on 
-`mattermost <https://mattermost.brainhack.org/brainhack/channels/brainspace>`_
+`mattermost <https://mattermost.brainhack.org/brainhack/channels/brainspace>`_.
 
 BrainSpace is a lightweight cross-platform toolbox primarily intended 
 for macroscale gradient mapping and analysis of 
