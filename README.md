@@ -1,6 +1,6 @@
 # BrainSpace
 
-![](.brainspace_logo_black.png)
+![](https://github.com/ReinderVosDeWael/BrainSpace/blob/master/.brainspace_logo_black.png)
 
 ![https://travis-ci.org/MICA-MNI/BrainSpace](https://img.shields.io/travis/MICA-MNI/BrainSpace/master?style=flat&logo=travis)
 
