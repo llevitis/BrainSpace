@@ -1,7 +1,10 @@
 function build_figure(obj)
+% Initializes the volume viewer figure. Graphics object handles are stored
+% in obj.handles. 
+
 % Build a full screen figure window with a white color. 
 obj.handles.figure = figure('Units','Normalized', ...
-                            'Position',[0 0 .5 .5], ...
+                            'Position',[0 0 1 1], ...
                             'Color', 'w');
 
 % Set up the axes and image objects.
@@ -35,7 +38,10 @@ end
 set(obj.handles.axes                        , ...
     'DataAspectRatio'   , [1 1 1]           , ...
     'PlotBoxAspectRatio', [1 1 1]           , ...
-    'Visible'           , 'off'             );     
+    'Visible'           , 'off'             );    
+
+% Draw everything before handing control back to the user.
+drawnow
 end
 %% Support functions. 
 
