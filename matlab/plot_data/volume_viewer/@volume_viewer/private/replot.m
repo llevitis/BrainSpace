@@ -1,6 +1,5 @@
 function replot(obj)
-% This plot the images and replots them when the user moves from one slice
-% to another. 
+% This replots the images when the user moves from one slice to another.
 
 % If the figure has not been built yet, simply return. 
 if ~contains(fieldnames(obj.handles),'figure1')

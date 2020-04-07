@@ -64,7 +64,6 @@ handles.output = hObject;
 % Update handles structure
 guidata(hObject, handles);
 
-% RV added code:
 % Grab the object. 
 obj = varargin{1};
 obj.handles = handles; 
@@ -83,7 +82,8 @@ set(obj.handles.figure1                 , ...
 for ii = 1:3
     axes_name = ['axes' num2str(ii)];
     image_name = ['imagesc' num2str(ii)];
-        
+    
+    % Plots the image and sets a callback for mouse clicks. 
     obj.handles.(image_name) = imagesc(obj.handles.(axes_name), ...
         obj.get_slice(ii), ...
         'ButtonDownFcn', @(~,evt) image_press_callback(evt,obj,ii));
@@ -128,8 +128,7 @@ function image_press_callback(evt,obj,idx)
 % Get mouse click coordinates. 
 coord = round(evt.IntersectionPoint);
 
-% Gotta flip the dimensions for third dimension due to the lack of a
-% transpose in plotting (see get_slice.m).
+% Gotta flip the dimensions.
 coord([1,2]) = coord([2,1]);
 
 % Compute the new slices.
