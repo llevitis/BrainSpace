@@ -1,55 +1,10 @@
 import glob
 from jinja2 import Environment, FileSystemLoader
 
-from nilearn import datasets
-from nilearn.input_data import NiftiLabelsMasker
-from nilearn.connectome import ConnectivityMeasure
 import nilearn.plotting as plotting
 import numpy as np
 
-
-def fmrivols2conn(fmri_filenames, atlas_filename, confounds_fn="", measure='correlation'):
-    """
-    Takes 4D fmri volumes from different and extracts the connectivity matrix
-    Parameters
-    ----------
-    fmri_filenames: lists of paths  or path
-        List Fullpath to functional images in nifti
-    altas_filename: path
-        Fullpath to the parcellation to create the FC matrix.
-        Must be in the same space than functional 
-    confounds_fn (optional): path
-        Paths to a csv type files with the confound regressors for each dataset.
-    measure: str
-        {"correlation", "partial correlation", "tangent", "covariance", "precision"}, optional
-    Returns
-    -------
-    FC_matrix: matrix
-       Functional connectivy matrix of the image. 
-    """
-    # if user is only inputing one module adapt input so is accepted by the function
-    if isinstance(fmri_filenames,str):
-        fmri_filenames = [fmri_filenames]
-        confounds_fn = [confounds_fn]
-    # Create masker to extract the timeseries
-    masker = NiftiLabelsMasker(labels_img=atlas_filename, standardize=True)
-    # define the connectome measure
-    connectome_measure = ConnectivityMeasure(kind=measure)
-    timeseries = []
-    # loop that extracts the timeseries for each volume
-    for i,volume in enumerate(fmri_filenames):
-        if confounds_fn[0] == "":
-            timeseries.append(masker.fit_transform(volume).T)
-        else:
-            timeseries.append(masker.fit_transform(volume, confounds=confounds_fn[i]).T)
-    timeseries = np.array(timeseries)
-    mean_ts = np.mean(timeseries,axis=0)
-    # call fit_transform from ConnectivityMeasure object
-    FC_matrix = connectome_measure.fit_transform([mean_ts.T])[0]
-    # saving each subject correlation to correlations
-    return FC_matrix
-
-def grad2fig(grad_object, atlas_filename, save_fig=False, output_dir=None):
+def _create_static_fig(grad_object, atlas_filename, save_fig=False, output_dir=None):
     """
     Takes 3D gradient object or 4D stacked gradient object and creates 
     figure depicting slices from each gradient 
@@ -90,7 +45,7 @@ def grad2fig(grad_object, atlas_filename, save_fig=False, output_dir=None):
     if save_fig == True & output_dir != None:
         plt.save_fig(os.path.join(output_dir, "brainspace_gradients.png"))
 
-def gradient_interactive_fig(grad_object, atlas_filename, output_dir): 
+def _create_interactive_fig(grad_object, atlas_filename, output_dir): 
     dim = grad_obj.shape
     atlas = nib.load(atlas_filename)
     img_slice = [6, -18, 14]
@@ -105,7 +60,7 @@ def gradient_interactive_fig(grad_object, atlas_filename, output_dir):
         html_view.save_as_html(os.path.join(os.path.join(output_dir, "gradient_" + str(i) + ".html")))
 
 
-def grad2report(grad_object, output_dir): 
+def _create_qc_report(grad_object, output_dir): 
     """
     Takes 3D gradient object or 4D stacked gradient object and creates 
     an HTML report with interactive images displayed
@@ -122,4 +77,23 @@ def grad2report(grad_object, output_dir):
     -------
     Figure depicting the gradients 
     """
-        
+    
+    gradient_images = sorted(glob.glob("gradient_*.html"))
+    content = []
+    for i, img in enumerate(gradient_images):
+        curr_dict = {}
+        curr_dict['name'] = "Gradient {0}".format(i+1)
+        curr_dict['img'] = img
+        content.append(dict)
+
+    file_loader = FileSystemLoader('templates')
+    env = Environment(loader=file_loader)
+
+    template = env.get_template('gradients_qc_template.html')
+
+    output_html = template.render(title="BrainSpace Gradients",
+                                  content=content)
+
+    file = os.path.join(output_dir, "gradients_qc.html")
+    with open(file, "w") as f: 
+        f.write(output_html)

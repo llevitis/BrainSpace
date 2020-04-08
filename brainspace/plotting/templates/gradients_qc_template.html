@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block title%}{{ title }}{% endblock %}
+
+{% block content %}
+<h1>{{ title }}</h1>
+{% for grad_img in content %}
+    <h3>{{ grad_img.name }}</h3>
+    <iframe src="{{ grad_img.img }}" style="border: none;" width="400" height="200"></iframe>
+    <br>
+{% endfor %}
+{% endblock %}
