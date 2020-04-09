@@ -40,7 +40,7 @@ def _create_static_fig(grad_obj, atlas, save_fig=False, output_dir=None, output_
     for i in range(0, num_grads):
         grad_img = nib.Nifti1Image(grad_obj[i], atlas.affine, atlas.header)
         grad_img_list.append(grad_img)
-    fig = plt.figure(figsize=(x_len, num_grads*3))
+    fig = plt.figure(figsize=(x_len, num_grads*y_len))
     for i, grad_img in enumerate(grad_img_list):
         idx = i + 1
         ax = plt.subplot(num_grads, 1, idx)
@@ -73,8 +73,6 @@ def _create_interactive_fig(grad_obj, atlas, output_dir):
     if type(atlas) == str:
         atlas = nib.load(atlas)
     img_slice = [6, -18, 14]
-    x_len = 10 
-    y_len = 3 
     if dim == 3:
         grad_obj = [grad_obj]
     for i in range(0, len(grad_obj)):
