@@ -56,6 +56,18 @@ def _create_static_fig(grad_obj, atlas, save_fig=False, output_dir=None, output_
             output_file = os.path.join(output_dir, "brainspace_gradients.png")
         plt.savefig(output_file)
 
+"""
+    Takes 3D gradient object or 4D stacked gradient object and creates 
+    an interactive html viewer of the gradient map
+    Parameters
+    ----------
+    grad_obj: 3D or 4D np array
+    altas: path or Nifti1Image
+        Fullpath to the parcellation used to create the FC matrix or the loaded
+        atlas.
+    output_dir (optional): path
+        Path to directory where figure should be saved 
+    """
 def _create_interactive_fig(grad_obj, atlas, output_dir): 
     dim = grad_obj.shape
     if type(atlas) == str:
@@ -75,14 +87,11 @@ def _create_interactive_fig(grad_obj, atlas, output_dir):
 def _create_qc_report(output_dir): 
     """
     Takes 3D gradient object or 4D stacked gradient object and creates 
-    an HTML report with interactive images displayed
+    an HTML report with interactive gradient maps displayed.
     Parameters
     ----------
     output_dir (optional): path
         Path to directory where HTML report should be saved 
-    Returns
-    -------
-    Figure depicting the gradients 
     """
     
     gradient_images = sorted(glob.glob(os.path.join(output_dir,"gradient_*.html")))
