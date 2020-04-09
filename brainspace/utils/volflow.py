@@ -1,7 +1,6 @@
 from nilearn import datasets
 from nilearn.input_data import NiftiLabelsMasker
-from nilearn.connectome import ConnectivityMeasure
-import nilearn.plotting as plotting
+from nilearn.connectome import ConnectivityMeasure 
 import numpy as np
 
 
