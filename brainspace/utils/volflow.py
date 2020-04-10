@@ -1,3 +1,5 @@
+import os
+import json
 from nilearn import datasets
 from nilearn.input_data import NiftiLabelsMasker
 from nilearn.connectome import ConnectivityMeasure 
@@ -44,3 +46,26 @@ def fmrivols2conn(fmri_filenames, atlas_filename, confounds_fn="", measure='corr
     FC_matrix = connectome_measure.fit_transform([mean_ts.T])[0]
     # saving each subject correlation to correlations
     return FC_matrix
+
+def _save_gradient_metadata(gradient_map, output_dir=None):
+    """
+    Takes GradientMap object and creates a JSON object corresponding to 
+    information about the processing choices.
+    Parameters
+    ----------
+    gradient_map: GradientMap object
+    output_dir (optional): path
+        Path where the JSON object can be saved 
+    Returns
+    -------
+    gradient_maps_metadata: JSON object
+    """
+    gradient_maps_metadata = {}
+    parameters = ['n_components', 'approach', 'kernel', 'alignment', 'random_state']
+    for param in parameters: 
+        gradient_maps_metadata[param] = gradient_map.__dict__[param]
+    if output_dir != None:
+        file = os.path.join(output_dir, "gradient_maps_metadata.json")
+        with open(file, "w") as f:
+            json.dump(gradient_maps_metadata, f)
+    return gradient_maps_metadata
