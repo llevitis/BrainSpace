@@ -106,7 +106,6 @@ def _create_qc_report(output_dir, metadata=None):
         else:
             print ("No metadata JSON object supplied, and JSON file does not exist.")
     content = []
-    print(metadata)
     for i, img in enumerate(gradient_images):
         curr_dict = {}
         curr_dict['name'] = "Gradient {0}".format(i+1)
