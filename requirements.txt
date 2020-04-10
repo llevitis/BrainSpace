@@ -6,4 +6,5 @@ vtk>=8.1.0
 nibabel
 nilearn
 Jinja2>=2.11.1
+json
 

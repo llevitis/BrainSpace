@@ -4,6 +4,11 @@
 
 {% block content %}
 <h1>{{ title }}</h1>
+<h3>Number of components: {{ metadata["n_components"] }}</h3>
+<h3>Approach: {{ metadata["approach"] }}</h3>
+<h3>Kernel: {{ metadata["kernel"] }}</h3>
+<h3>Alignment: {{ metadata["alignment"] }}</h3>
+<h3>Random State: {{ metadata["random_state"] }}</h3>
 {% for grad_img in content %}
     <h3>{{ grad_img.name }}</h3>
     <iframe src="{{ grad_img.img }}" style="border: none;" width="400" height="200"></iframe>

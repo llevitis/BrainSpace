@@ -1,5 +1,6 @@
 import os
 import glob
+import json
 from jinja2 import Environment, FileSystemLoader
 
 import matplotlib.pyplot as plt
@@ -82,24 +83,35 @@ def _create_interactive_fig(grad_obj, atlas, output_dir):
         html_view.save_as_html(os.path.join(os.path.join(output_dir, "gradient_" + str(i) + ".html")))
 
 
-def _create_qc_report(output_dir): 
+def _create_qc_report(output_dir, metadata=None): 
     """
     Takes 3D gradient object or 4D stacked gradient object and creates 
     an HTML report with interactive gradient maps displayed.
     Parameters
     ----------
     output_dir (optional): path
-        Path to directory where HTML report should be saved 
+        Path to directory where HTML report should be saved
+    metadata (optional): JSON object 
+        JSON object containing the processing choies used to create the gradient
+        maps. If it is not passed, then the function looks for a file in the 
+        output_dir matching 'gradient_maps_metadata.json'
     """
     
     gradient_images = sorted(glob.glob(os.path.join(output_dir,"gradient_*.html")))
+    if metadata == None: 
+        metadata_file = os.path.join(output_dir, "gradient_maps_metadata.json")
+        if os.path.isfile(metadata_file):
+            with open(metadata_file, 'r') as f:
+                metadata = json.load(f)
+        else:
+            print ("No metadata JSON object supplied, and JSON file does not exist.")
     content = []
+    print(metadata)
     for i, img in enumerate(gradient_images):
         curr_dict = {}
         curr_dict['name'] = "Gradient {0}".format(i+1)
         curr_dict['img'] = img
         content.append(curr_dict)
-
     template_path=os.path.join(os.path.dirname(__file__),'./templates')
     file_loader = FileSystemLoader(searchpath=template_path)
     env = Environment(loader=file_loader)
@@ -107,6 +119,7 @@ def _create_qc_report(output_dir):
     template = env.get_template('gradients_qc_template.html')
 
     output_html = template.render(title="BrainSpace Gradients",
+                                  metadata=metadata,
                                   content=content)
 
     file = os.path.join(output_dir, "gradients_qc.html")
