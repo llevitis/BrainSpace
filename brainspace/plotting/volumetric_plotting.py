@@ -28,7 +28,7 @@ def _create_static_fig(grad_obj, atlas, save_fig=False, output_dir=None, output_
     -------
     Figure depicting the gradients 
     """
-    dim = grad_obj.shape
+    dim = len(grad_obj.shape)
     if type(atlas) == str:
         atlas = nib.load(atlas)
     img_slice = [6, -18, 14]
@@ -70,7 +70,7 @@ def _create_interactive_fig(grad_obj, atlas, output_dir):
     output_dir (optional): path
         Path to directory where figure should be saved 
     """
-    dim = grad_obj.shape
+    dim = len(grad_obj.shape)
     if type(atlas) == str:
         atlas = nib.load(atlas)
     img_slice = [6, -18, 14]
